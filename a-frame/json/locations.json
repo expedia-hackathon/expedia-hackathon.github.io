@@ -140,19 +140,19 @@
       "backgrounds": [
         {
           "panorama":"assets/images/locations/sedona/360/sedona_01.jpg",
-          "particles":"rain"
+          "particles":"shockwave"
         },
         {
           "panorama":"assets/images/locations/sedona/360/sedona_02.jpg",
-          "particles":"rain"
+          "particles":"cloud"
         },
         {
           "panorama":"assets/images/locations/sedona/360/sedona_03.jpg",
-          "particles":"rain"
+          "particles":"shockwave"
         },
         {
           "panorama":"assets/images/locations/sedona/360/sedona_04.jpg",
-          "particles":"rain"
+          "particles":"shockwave"
         }
       ],
       "bookLink":"https://wwwexpediacom.trunk.sb.karmalab.net/Sedona.d6054771.Destination-Travel-Guides",
@@ -196,7 +196,7 @@
       "backgrounds": [
         {
           "panorama":"assets/images/locations/shanghai/360/shanghai_01.jpg",
-          "particles":"shockwave"
+          "particles":"star"
         },
         {
           "panorama":"assets/images/locations/shanghai/360/shanghai_02.jpg",
@@ -204,7 +204,7 @@
         },
         {
           "panorama":"assets/images/locations/shanghai/360/shanghai_03.jpg",
-          "particles":"snow"
+          "particles":"shockwave"
         },
         {
           "panorama":"assets/images/locations/shanghai/360/shanghai_04.jpg",

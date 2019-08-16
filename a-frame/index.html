@@ -37,10 +37,13 @@
       <div class="float-left">
         <!-- <button type="button" class="btn btn-primary btn-lg mx-2 my-2 ">Book a Trip Now!</button> -->
 
-        <button id="button-help" type="button" class="btn btn-primary"
+        <button id="button-help" type="button" class="btn btn-primary mr-2"
           data-toggle="modal" data-target="#modal-help"
         >
         <i class="fas fa-question"></i>
+        </button>
+        <button id="button-audio" type="button" class="btn btn-warning text-white" onclick="onClickAudioButton()">
+        <i class="fas fa-volume-mute"></i>
         </button>
       </div>
     </div>
@@ -174,9 +177,9 @@
     </a-scene> -->
     <div id="three-container">
     </div>
-    <audio id="audio-bgm" controls autoplay loop style="display:none;">
-      <source src="assets/audio/bgm_01.mp3" type="audio/mpeg">
-      <!-- <source src="assets/audio/bgm_02.mp3" type="audio/mpeg"> -->
+    <audio id="audio-bgm" controls loop style="display:none;">
+      <!-- <source src="assets/audio/bgm_01.mp3" type="audio/mpeg"> -->
+      <source src="assets/audio/bgm_02.mp3" type="audio/mpeg">
     </audio>
     <!-- <iframe src="assets/audio/bgm_01.mp3" allow="autoplay" style="display:none" id="iframeAudio">
     </iframe> -->

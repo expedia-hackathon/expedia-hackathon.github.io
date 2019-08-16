@@ -25,8 +25,13 @@ var locationModalCountry = $("#modal-location-country");
 var locationModalDescriptionTitle = $("#modal-location-description-title");
 
 var cardSummary = $("#card-summary");
-console.log(cardSummary);
 
+
+var audioButton = $("#button-audio");
+var audioButtonIcon = $("#button-audio > i");
+console.log(audioButtonIcon);
+var audioOn = false;
+var bgmAudio = document.getElementById("audio-bgm");
 
 function getLocationsData(onSuccess, onError){
   fetch('json/locations.json')
@@ -47,7 +52,7 @@ function getLocationsData(onSuccess, onError){
 }
 
 // var bgmAudio = document.getElementById("audio-bgm");
-//
+
 // var bgmAudioLoad = bgmAudio.load();
 // console.log(bgmAudioLoad);
 // bgmAudio.play();
@@ -117,26 +122,7 @@ function setCurrentLocation(newLocationId){
   setParticles(locationData.backgrounds[currentBackgroundIndex].particles);
 }
 
-getLocationsData((data)=>{
-  data.destinations.forEach(locationData=>{
-    cachedLocationsData[locationData.cityName] = locationData;
-    if(cachedRegionLocationsId['Global']==null) cachedRegionLocationsId['Global']=[];
-    cachedRegionLocationsId['Global'].push(locationData.cityName);
 
-    locationData.backgrounds.forEach(background=>{
-      preloadTexture(background.panorama);
-    });
-
-  });
-  console.log(cachedRegionLocationsId);
-  console.log(cachedTextures);
-  let newLocationId = getRandomLocation();
-
-  setCurrentLocation(newLocationId);
-
-},(error)=>{
-  console.log("Failed to get locations data",error);
-});
 
 function onClickBookVacationButton(){
   console.log("onClickBookVacationButton");
@@ -208,4 +194,65 @@ function onClickRegionOption(region){
   console.log("onClickRegionOption",region);
   currentRegion = region;
   regionButton.html("Region: "+region);
+}
+
+function onClickAudioButton(){
+  if(audioOn){
+    audioButtonIcon.removeClass('fa-volume-up');
+    audioButtonIcon.addClass('fa-volume-mute');
+    bgmAudio.pause();
+    audioOn=false;
+  }
+  else{
+    audioButtonIcon.removeClass('fa-volume-mute');
+    audioButtonIcon.addClass('fa-volume-up');
+
+    var bgmPlayPromise = bgmAudio.play();
+
+    // console.log(bgmPlayPromise);
+    if (bgmPlayPromise !== undefined) {
+      bgmPlayPromise.then(_ => {
+        console.log("BGM started playing!");
+      })
+      .catch(error => {
+        console.log("Failed to play BGM",error);
+      });
+    }
+    audioOn=true;
+  }
+}
+
+window.onload = function() {
+  getLocationsData((data)=>{
+    data.destinations.forEach(locationData=>{
+      cachedLocationsData[locationData.cityName] = locationData;
+      if(cachedRegionLocationsId['Global']==null) cachedRegionLocationsId['Global']=[];
+      cachedRegionLocationsId['Global'].push(locationData.cityName);
+
+      locationData.backgrounds.forEach(background=>{
+        preloadTexture(background.panorama);
+      });
+
+    });
+    console.log(cachedRegionLocationsId);
+    console.log(cachedTextures);
+    let newLocationId = getRandomLocation();
+
+    setCurrentLocation(newLocationId);
+
+  },(error)=>{
+    console.log("Failed to get locations data",error);
+  });
+
+  // var playBGMPromise = document.getElementById("audio-bgm").play();
+  //
+  // console.log(playBGMPromise);
+  // if (playBGMPromise !== undefined) {
+  //   playBGMPromise.then(_ => {
+  //     console.log("BGM started playing!");
+  //   })
+  //   .catch(error => {
+  //     console.log("Failed to play BGM",error);
+  //   });
+  // }
 }

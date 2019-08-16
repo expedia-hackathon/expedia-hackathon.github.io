@@ -84,12 +84,14 @@ html, body {
   border: 0;
 }
 
-#button-help {
-  font-size:1.5rem;
+#button-help, #button-audio {
+  font-size:1.55rem;
   border-radius: 50%;
   width: 3.2rem;
   height: 3.2rem;"
 }
+
+
 
 #button-location-info {
   font-size:1rem !important;
@@ -159,11 +161,11 @@ html, body {
     font-size: 1.5rem !important;
   }
 
-  button#button-help {
+  /* button#button-help, button#button-audio {
     font-size: 1.2rem !important;
     width: 2.6rem !important;;
     height: 2.6rem !important;;
-  }
+  } */
 
   #div-location-card {
     width: 16rem;
