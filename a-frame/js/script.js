@@ -33,6 +33,8 @@ console.log(audioButtonIcon);
 var audioOn = false;
 var bgmAudio = document.getElementById("audio-bgm");
 
+var loadingSpinner = $("#loading-spinner");
+
 function getLocationsData(onSuccess, onError){
   fetch('json/locations.json')
   .then(function(response) {
@@ -118,8 +120,9 @@ function setCurrentLocation(newLocationId){
   cardSummary.contents().filter(function(){ return this.nodeType == 3; }).first().replaceWith(newCardSummary+"... ");
 
   currentBackgroundIndex=0;
-  setSkyboxTexture(locationData.backgrounds[currentBackgroundIndex].panorama);
-  setParticles(locationData.backgrounds[currentBackgroundIndex].particles);
+  setBackground(locationData.backgrounds[currentBackgroundIndex]);
+  // setSkyboxTexture(locationData.backgrounds[currentBackgroundIndex].panorama);
+  // setParticles(locationData.backgrounds[currentBackgroundIndex].particles);
 }
 
 
@@ -135,8 +138,9 @@ function onClickChangeBackgroundButton(){
   currentBackgroundIndex=(currentBackgroundIndex+1)%locationData.backgrounds.length;
   console.log(currentBackgroundIndex);
   console.log(locationData.backgrounds[currentBackgroundIndex]);
-  setSkyboxTexture(locationData.backgrounds[currentBackgroundIndex].panorama);
-  setParticles(locationData.backgrounds[currentBackgroundIndex].particles);
+  // setSkyboxTexture(locationData.backgrounds[currentBackgroundIndex].panorama);
+  // setParticles(locationData.backgrounds[currentBackgroundIndex].particles);
+  setBackground(locationData.backgrounds[currentBackgroundIndex]);
 }
 
 function onClickNextLocationButton(){
@@ -229,9 +233,9 @@ window.onload = function() {
       if(cachedRegionLocationsId['Global']==null) cachedRegionLocationsId['Global']=[];
       cachedRegionLocationsId['Global'].push(locationData.cityName);
 
-      locationData.backgrounds.forEach(background=>{
-        preloadTexture(background.panorama);
-      });
+      // locationData.backgrounds.forEach(background=>{
+      //   preloadTexture(background.panorama);
+      // });
 
     });
     console.log(cachedRegionLocationsId);

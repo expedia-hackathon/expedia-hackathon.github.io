@@ -115,7 +115,7 @@
     </div>
     <button
     id="button-roam-around"
-    class="btn btn-outline-secondary btn-sm" style="color:white" onclick="onClickChangeBackgroundButton()"><i class="fas fa-random ml-1 fa-sm"></i>
+    class="btn btn-secondary btn" style="color:white" onclick="onClickChangeBackgroundButton()"><i class="fas fa-random ml-1 fa-sm"></i>
     </button>
 
     <!-- Modal -->
@@ -176,6 +176,10 @@
       <a-camera position="0 0 0" ></a-camera>
     </a-scene> -->
     <div id="three-container">
+    </div>
+
+    <div id="loading-spinner" class="spinner-border text-warning d-none" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
     <audio id="audio-bgm" controls loop style="display:none;">
       <!-- <source src="assets/audio/bgm_01.mp3" type="audio/mpeg"> -->

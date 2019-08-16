@@ -48,6 +48,17 @@ html, body {
   background: rgba(192, 192, 192, 0.5);
 }
 
+#loading-spinner {
+  position: absolute;
+  width: 3.5rem;
+  height: 3.5rem;
+  font-size: 2rem;
+  margin-left: -1.75rem;
+  margin-top: -1.75rem;
+  left:50%;
+  top:50%;
+}
+
 #card-summary {
   font-size: 15px;
 }

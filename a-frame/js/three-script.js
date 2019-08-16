@@ -164,15 +164,76 @@ if ( THREE.WEBGL.isWebGLAvailable() ) {
   document.getElementById( 'three-container' ).appendChild( warning );
 }
 
+function setBackground(background){
+  console.log("setBackground!", background);
+  let panorama=background.panorama;
+  let particles=background.particles;
+  if(cachedTextures[panorama]==null){
+
+    loadingSpinner.removeClass("d-none");
+    cachedTextures[panorama] = textureLoader.load( panorama,
+      function (texture) {
+        console.log("Texture loaded!", texture);
+        loadingSpinner.addClass("d-none");
+
+        skyboxMesh.material.map = cachedTextures[panorama];
+        skyboxMesh.material.needsUpdate = true;
+
+        if(particlesShown){
+          scene.remove(particleSystem.particleGroup.mesh);
+          particlesShown = false;
+        }
+        if(particles!=null){
+          particleSystem.data.preset=particles;
+          particleSystem.update();
+          scene.add(particleSystem.particleGroup.mesh);
+          particlesShown = true;
+        }
+      });
+
+  }
+  else{
+    skyboxMesh.material.map = cachedTextures[panorama];
+    skyboxMesh.material.needsUpdate = true;
+
+    if(particlesShown){
+      scene.remove(particleSystem.particleGroup.mesh);
+      particlesShown = false;
+    }
+    if(particles!=null){
+      particleSystem.data.preset=particles;
+      particleSystem.update();
+      scene.add(particleSystem.particleGroup.mesh);
+      particlesShown = true;
+    }
+  }
+
+  // skyboxMesh.material.map = cachedTextures[panorama];
+  // skyboxMesh.material.needsUpdate = true;
+
+  // if(cachedTextures[src]==null) cachedTextures[src] = textureLoader.load( src,
+  //   function (texture) {
+  //     console.log("Texture loaded!", texture);
+  //   });
+  // skyboxMesh.material.map = cachedTextures[src];
+  // skyboxMesh.material.needsUpdate = true;
+}
+
 function setSkyboxTexture(src){
-  if(cachedTextures[src]==null) cachedTextures[src] = textureLoader.load( src );
+  if(cachedTextures[src]==null) cachedTextures[src] = textureLoader.load( src,
+    function (texture) {
+      console.log("Texture loaded!", texture);
+    });
   skyboxMesh.material.map = cachedTextures[src];
   skyboxMesh.material.needsUpdate = true;
 }
 
-function preloadTexture(src){
-  if(cachedTextures[src]==null) cachedTextures[src] = textureLoader.load( src );
-}
+// function preloadTexture(src){
+//   if(cachedTextures[src]==null) cachedTextures[src] = textureLoader.load( src,
+//     function (texture) {
+//       console.log("Texture loaded!", texture);
+//     });
+// }
 
 function setParticles(newParticles){
   if(particlesShown){
