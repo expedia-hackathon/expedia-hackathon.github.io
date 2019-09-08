@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Anywhere 360 Image Viewer</title>
+    <meta name="description" content="Anywhere 360 Image Viewer">
+    <!-- <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" /> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script> -->
+    <!-- <link href="vendors/fontawesome-free-5.10.1-web/css/all.css" rel="stylesheet"> -->
+    <script src="https://kit.fontawesome.com/c3366ae51d.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="vendors/three/three.min.js"></script>
+    <script src="vendors/three/WebGL.js"></script>
+    <script src="vendors/three/OrbitControls.js"></script>
+    <script src="vendors/particle-system/SPE.js"></script>
+    <script src="vendors/particle-system/aframe-particle-system.js"></script>
+
+    <script src="js/three-script.js" defer></script>
+    <script src="js/script.js" defer></script>
+    <!-- <script src="vendors/three/TrackballControls.js"></script> -->
+    <link rel="icon" href="favicon.png">
+  </head>
+  <body>
+    <!-- Google Embedded Map -->
+   	<iframe id="google-map" style="display:none"
+	    src="" allowfullscreen>
+    </iframe>
+    <!-- Overlay GUI -->
+    <div id="gui-top-left">
+      <div class="float-left">
+        <!-- <button type="button" class="btn btn-primary btn-lg mx-2 my-2 ">Book a Trip Now!</button> -->
+
+        <button id="button-help" type="button" class="btn btn-primary mr-2"
+          data-toggle="modal" data-target="#modal-help"
+        >
+        <i class="fas fa-question"></i>
+        </button>
+        <button id="button-audio" type="button" class="btn btn-warning text-white" onclick="onClickAudioButton()">
+        <i class="fas fa-volume-mute"></i>
+        </button>
+      </div>
+    </div>
+    <div id="gui-bottom-left" style="display:none">
+      <!-- <div class="row my-4"> -->
+      <div id="div-location-card" class="card" >
+        <div class="card-header p-0">
+        <img id="location-card-thumbnail" class="card-img-top " src="" >
+        </div>
+
+        <div id="div-location-card-body" class="card-body ">
+          <!-- <div class="mt-lg-2 mb-lg-4 mt-0 mb-3">
+
+          </div> -->
+          <h3 id="location-card-name" class="card-title mb-1 mt-0">
+            Phoenix
+          </h3>
+          <h6 id="location-card-country" class="mb-lg-3 mb-2">USA</h6>
+          <div id="card-summary" class="mb-lg-4 mb-3">Experience the theater, museums, and art in Denver... <a id="card-more-info-link" data-toggle="modal" data-target="#modal-location-info">more info</a></div>
+          <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+          <button id="button-location-card-book" type="button" class="btn btn-block btn-warning btn-sm disabled mt-1" onclick="onClickBookVacationButton()">BOOK A TRIP</button>
+        </div>
+      </div>
+      <!-- <div class="m-0 float-left">
+          <button type="button" class="btn btn-danger btn-lg m-0">BOOK A VACATION!</button>
+
+      </div> -->
+
+    </div>
+    <div id="gui-bottom-right" class="rounded" style="display:none">
+      <!-- <div class="row my-4"> -->
+        <div style="text-align: right; ">
+          <!-- <button type="button" class="btn btn-primary btn-lg mx-2 my-2 ">Book a Trip Now!</button> -->
+          <button id="button-previous-location" type="button" class="btn btn-primary btn-bottom-right btn-sm mr-3 disabled" onclick="onClickPreviousLocationButton()">
+            <i class="fas fa-plane fa-flip-horizontal"></i>
+          </button>
+          <div class="btn-group " role="group" aria-label="Button group with nested dropdown">
+
+            <div class="btn-group" role="group">
+              <button id="button-region" type="button" class="btn btn-primary dropdown-toggle btn-bottom-right btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Region: Global
+              </button>
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" href="#" onclick="onClickRegionOption('Global')">Global</a>
+
+                <a class="dropdown-item" href="#" onclick="onClickRegionOption('North America')">North America</a>
+                <a class="dropdown-item" href="#" onclick="onClickRegionOption('South America')">South America</a>
+                <a class="dropdown-item" href="#" onclick="onClickRegionOption('Europe')">Europe</a>
+                <a class="dropdown-item" href="#" onclick="onClickRegionOption('Asia')">Asia</a>
+                <!-- <a class="dropdown-item" href="#" onclick="onClickRegionOption('South America')">Mexico & Central America</a> -->
+
+                <a class="dropdown-item" href="#" onclick="onClickRegionOption('Australia')">Australia</a>
+                <!-- <a class="dropdown-item" href="#" onclick="onClickRegionOption('South America')">Caribean</a> -->
+                <a class="dropdown-item" href="#" onclick="onClickRegionOption('Africa')">Africa</a>
+                <!-- <a class="dropdown-item" href="#" onclick="onClickRegionOption('Middle East')">Middle East</a> -->
+              </div>
+            </div>
+            <button type="button" id="button-next-location" class="btn btn-success btn-bottom-right btn-sm" onclick="onClickNextLocationButton()">
+              <i class="fas fa-plane"></i>
+            </button>
+          </div>
+
+
+        </div>
+
+      <!-- </div> -->
+
+    </div>
+    <button
+    id="button-roam-around"
+    class="btn btn-secondary btn" style="color:white; display:none" onclick="onClickChangeBackgroundButton()"><i class="fas fa-random "></i>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal-help" tabindex="-1" role="dialog" aria-labelledby="modal-help-title" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header d-block text-center">
+            <h3 class="modal-title " id="modal-help-long-title"><img src="favicon.png" style="height:40px" class="mr-2">Anywhere 360 Image Viewer</h3>
+            <button type="button" class="close" style="position:absolute; right:1rem; top:1rem" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" style="font-size:2rem">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body mb-4 mt-3 mx-4" style="font-size:1.2rem; line-height:2.4rem;">
+            Click the <i class="fas fa-plane fa-lg mx-2 text-warning"></i> button to visit a new city.<br>
+            Click the <i class="fas fa-plane fa-flip-horizontal fa-lg mx-2 text-primary"></i> button to review the last city.<br>
+            Click the <i class="fas fa-random fa-lg mx-2"></i> button to view another scene at the current city.<br>
+            Click <span class=" mx-2 badge badge-primary p-2">Region: XXX</span> to select the region of cities you want to visit.<br>
+            Click <span class=" mx-2 badge badge-warning p-2">BOOK A TRIP</span> to check the vacation packages related to the city.<br>
+
+          </div>
+          <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal-location-info" tabindex="-1" role="dialog" aria-labelledby="modal-location-info-title" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header d-block text-center">
+            <h2 class="modal-title mb-2" id="modal-location-info-long-title" >Phoenix</h2>
+
+            <button type="button" class="close" data-dismiss="modal" style="position:absolute; right:1rem; top:1rem" aria-label="Close">
+              <span aria-hidden="true" style="font-size:2rem">&times;</span>
+            </button>
+
+            <h5 id="modal-location-country" class="">United States Of America</h5>
+          </div>
+          <div class="modal-body m-4" style="">
+            <img id="modal-location-thumbnail" class="mb-2" src="assets/images/locations/phoenix/thumbnails/thumbnail-phoenix.webp" style="width:100%">
+            <h4 class="mt-4" id="modal-location-description-title" >Explore Grand Canyon: its hiking, natural setting, camping, and more!</h4>
+            <p id="modal-location-description" class="mt-4" style="white-space:pre-wrap">
+            </P>
+          </div>
+          <div class="modal-footer " style="text-align: center;">
+            <button type="button" class="btn btn-warning mx-auto my-2 btn-lg" data-dismiss="modal" onclick="onClickBookVacationButton()">BOOK A TRIP</button>
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- A-Frame Scene -->
+    <!-- <a-scene background="color: #FAFAFA" vr-mode-ui="enabled: false">
+      <a-box color="tomato" depth="2" height="2" width="2" position="2 0 5" ></a-box>
+      <a-sky src="assets/images/locations/phoenix/360/phoenix_01.jpg" rotation="0 225 0"></a-sky>
+      <a-camera position="0 0 0" ></a-camera>
+    </a-scene> -->
+    <div id="three-container">
+    </div>
+    <div id="loading-hint" class="d-none text-center">
+      <div id="loading-spinner" class="spinner-border text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+
+      </div>
+      <h6 id="loading-text" class="mt-3 text-warning">Loading locations data...</h6>
+    </div>
+
+    <audio id="audio-bgm" controls loop style="display:none;">
+      <!-- <source src="assets/audio/bgm_01.mp3" type="audio/mpeg"> -->
+      <source src="assets/audio/bgm_02.mp3" type="audio/mpeg">
+    </audio>
+    <!-- <iframe src="assets/audio/bgm_01.mp3" allow="autoplay" style="display:none" id="iframeAudio">
+    </iframe> -->
+  </body>
+
+</html>
